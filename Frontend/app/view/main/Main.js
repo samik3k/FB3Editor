@@ -9,100 +9,45 @@ Ext.define(
 	'FBEditor.view.main.Main',
 	{
 	    extend: 'Ext.container.Container',
-	    requires: [
-	        'FBEditor.view.main.MainController',
-		    'FBEditor.view.panel.main.tools.Tools',
-	        'FBEditor.view.panel.main.navigation.Navigation',
-		    'FBEditor.view.panel.main.content.Content',
-	        'FBEditor.view.panel.main.props.Props'
-	    ],
-		id: 'main',
-	    xtype: 'main',
-	    controller: 'main',
-	    layout: {
-	        type: 'border'
-	    },
-		cls: 'fb3',
-		listeners: {
-			resize: 'onResize',
-			focusDetachPanels: 'onFocusDetachPanels',
-			checkWidthPanels: 'onCheckWidthPanels',
-			closedetachpanels: 'onDetachPanel',
-			closeapplication: 'onCloseApplication',
-			restoredetachpanel: 'onRestoreDetachPanel',
-			accessHub: 'onAccessHub'
-		},
-
-		/**
-		 * @property {Object} Конфигурация панелей по умолчанию.
-		 */
-		panelConfig: {
-			navigation: {
-				xtype: 'panel-main-navigation',
-				width: '15%',
-				region: 'west',
-				detachable: true,
-				collapsible: true
-			},
-			props: {
-				xtype: 'panel-main-props',
-				width: '15%',
-				region: 'east',
-				detachable: true,
-				collapsible: true
-			}
-		},
-
-		/**
-		 * @property {Object} Ссылки на окна с отсоединенными панелями.
-		 */
-		windowPanels: {
-			navigation: null,
-			props: null
-		},
-
-		initComponent: function ()
-		{
-			var me = this;
-
-			if (!FBEditor.parentWindow)
-			{
-				me.items = [
-					{
-						xtype: 'panel-main-tools'
-					},
-					{
-						xtype: 'panel-main-content'
-					}
-				];
-			}
-			me.callParent(arguments);
-		},
+		layout: 'center',
 
 		afterRender: function ()
 		{
-			var me = this;
+			var me = this,
+				btn;
 
-			if (!FBEditor.parentWindow)
-			{
-				// добавляем панели
-				Ext.Object.each(
-					me.windowPanels,
-					function (key)
+			btn = Ext.Widget(
+				{
+					xtype: 'button',
+					text: 'test',
+					handler: function ()
 					{
-						if (!FBEditor.getLocalStorage().getItem(key))
+						console.log('handler');
+						alert('handler');
+					},
+					listeners: {
+						click: function ()
 						{
-							// добавляем панели в главное окно
-							me.add(me.panelConfig[key]);
-						}
-						else
+							console.log('listeners click');
+						},
+						afterrender: function ()
 						{
-							// открываем отсоединенные панели
-							me.fireEvent('restoredetachpanel', key);
+							var view = this;
+
+							view.getEl().dom.addEventListener(
+								'click',
+								function ()
+								{
+									console.log('addEventListener click');
+								}
+							);
 						}
 					}
-				);
-			}
+				}
+			);
+
+			me.add(btn);
+
 			me.callParent(arguments);
 		},
 
