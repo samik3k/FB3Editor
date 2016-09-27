@@ -84,7 +84,7 @@ Ext.define(
 				if (index === length) {
 					listeners[length] = listener;
 				} else {
-					arrayInsert(listeners, index, [listener]);
+					Ext.Array.insert(listeners, index, [listener]);
 				}
 
 				if (observable.isElement) {
