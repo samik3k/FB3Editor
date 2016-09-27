@@ -19,7 +19,7 @@ Ext.define(
 			btn = Ext.Widget(
 				{
 					xtype: 'button',
-					text: 'test',
+					text: 'Тест версии ' + FBEditor.version,
 					handler: function ()
 					{
 						console.log('handler');
@@ -38,7 +38,27 @@ Ext.define(
 								'click',
 								function ()
 								{
+									console.log('-----------------------');
 									console.log('addEventListener click');
+								}
+							);
+
+							console.log('-----------------------');
+
+							view.on(
+								{
+									click: function ()
+									{
+										console.log('on click object');
+									}
+								}
+							);
+
+							view.on(
+								'click',
+								function ()
+								{
+									console.log('on click string');
 								}
 							);
 						}
