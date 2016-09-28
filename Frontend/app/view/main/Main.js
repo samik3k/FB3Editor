@@ -23,13 +23,12 @@ Ext.define(
 					handler: function ()
 					{
 						console.log('handler');
-						alert('handler');
 					},
 					listeners: {
-						click: function ()
+						/*click: function ()
 						{
 							console.log('listeners click');
-						},
+						},*/
 						afterrender: function ()
 						{
 							var view = this;
@@ -40,25 +39,6 @@ Ext.define(
 								{
 									console.log('-----------------------');
 									console.log('addEventListener click');
-								}
-							);
-
-							console.log('-----------------------');
-
-							view.on(
-								{
-									click: function ()
-									{
-										console.log('on click object');
-									}
-								}
-							);
-
-							view.on(
-								'click',
-								function ()
-								{
-									console.log('on click string');
 								}
 							);
 						}

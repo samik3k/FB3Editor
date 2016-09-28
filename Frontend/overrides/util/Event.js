@@ -19,7 +19,7 @@ Ext.define(
 
 			if (eventName === 'click')
 			{
-				console.log('Ext.util.Event#addListener', eventName, me.findListener(fn, scope) === -1, observable.isElement);
+				console.log('Ext.util.Event#addListener', eventName, me.findListener(fn, scope) === -1, observable);
 			}
 
 			//<debug>

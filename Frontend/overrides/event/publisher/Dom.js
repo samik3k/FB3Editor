@@ -57,15 +57,136 @@ Ext.define(
 			}
 		},
 
-		addDirectListener: function(eventName, element, capture) {
+		addDelegatedListener: function(eventName) {
 			var me = this;
 
-			if (eventName === 'click' && element.component && element.component.xtype === 'button')
+			if (eventName === 'click')
 			{
-				console.log('addDirectListener', eventName, element.component);
+				console.log('addDelegatedListener', eventName);
 			}
 
 			me.callParent(arguments);
+		},
+
+		doDelegatedEvent: function(e, invokeAfter) {
+			var me = this,
+				timeStamp = e.timeStamp;
+
+			if (e.type === 'click')
+			{
+				console.log('doDelegatedEvent', e, me.isEventBlocked(e));
+			}
+
+			e = new Ext.event.Event(e);
+
+			if (me.isEventBlocked(e)) {
+				return false;
+			}
+
+			me.beforeEvent(e);
+
+			Ext.frameStartTime = timeStamp;
+
+			me.reEnterCount++;
+			me.publish(e.type, e.target, e);
+			me.reEnterCount--;
+
+			if (invokeAfter !== false) {
+				me.afterEvent(e);
+			}
+
+			return e;
+		},
+
+		publish: function(eventName, target, e) {
+			var me = this,
+				targets, el, i, ln;
+
+			if (eventName === 'click')
+			{
+				console.log('publish', e, eventName, target, e);
+			}
+
+			if (Ext.isArray(target)) {
+				// Gesture publisher passes an already created array of propagating targets
+				targets = target;
+			} else if (me.captureEvents[eventName]) {
+				el = Ext.cache[target.id];
+				targets = el ? [el] : [];
+			} else {
+				targets = me.getPropagatingTargets(target);
+			}
+
+			ln = targets.length;
+
+			// We will now proceed to fire events in both capture and bubble phases.  You
+			// may notice that we are looping all potential targets both times, and only
+			// firing on the target if there is an Ext.Element wrapper in the cache.  This is
+			// done (vs. eliminating non-cached targets from the array up front) because
+			// event handlers can add listeners to other elements during propagation.  Looping
+			// all the potential targets ensures that these dynamically added listeners
+			// are fired.  See https://sencha.jira.com/browse/EXTJS-15953
+
+			// capture phase (top-down event propagation).
+			if (me.captureSubscribers[eventName]) {
+				for (i = ln; i--;) {
+					el = Ext.cache[targets[i].id];
+					if (el) {
+						me.fire(el, eventName, e, false, true);
+						if (e.isStopped) {
+							break;
+						}
+					}
+				}
+			}
+
+			// bubble phase (bottom-up event propagation).
+			// stopPropagation during capture phase cancels entire bubble phase
+			if (!e.isStopped && me.bubbleSubscribers[eventName]) {
+				for (i = 0; i < ln; i++) {
+					el = Ext.cache[targets[i].id];
+					if (el) {
+						me.fire(el, eventName, e, false, false);
+						if (e.isStopped) {
+							break;
+						}
+					}
+				}
+			}
+		},
+
+		fire: function(element, eventName, e, direct, capture) {
+			var event;
+
+			if (eventName === 'click')
+			{
+				console.log('fire', element.hasListeners[eventName], element);
+			}
+
+			if (element.hasListeners[eventName]) {
+				event = element.events[eventName];
+
+				if (event) {
+					if (capture && direct) {
+						event = event.directCaptures;
+					} else if (capture) {
+						event = event.captures;
+					} else if (direct) {
+						event = event.directs;
+					}
+
+					// yes, this second null check for event is necessary - one of the
+					// above assignments might have resulted in undefined
+					if (event) {
+						if (eventName === 'click')
+						{
+							console.log('setCurrentTarget', event, element.dom);
+						}
+						e.setCurrentTarget(element.dom);
+						event.fire(e, e.target);
+					}
+				}
+			}
 		}
 	}
 );
