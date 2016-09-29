@@ -16,7 +16,7 @@ Ext.define(
 
 			if (eventName === 'click' && element.component && element.component.xtype === 'button')
 			{
-				console.log(5, '> Ext.event.publisher.Dom#subscribe', eventName, this.target, element.component);
+				console.log(6, '> Ext.event.publisher.Dom#subscribe', eventName, this.target, element.component);
 				try {
 					throw Error();
 				}
@@ -29,16 +29,20 @@ Ext.define(
 			if (delegated && !me.directEvents[eventName]) {
 				// delegated listeners
 				subscribers = capture ? me.captureSubscribers : me.bubbleSubscribers;
+				if (eventName === 'click'){console.log(6.1, subscribers);}
 
 				if (!me.handles[eventName] && !me.delegatedListeners[eventName]) {
+					if (eventName === 'click'){console.log(6.11, me.handles, me.delegatedListeners);}
 					// First time we've attached a listener for this eventName - need to begin
 					// listening at the dom level
 					me.addDelegatedListener(eventName);
 				}
 
 				if (subscribers[eventName]) {
+					if (eventName === 'click'){console.log(6.12);}
 					++subscribers[eventName];
 				} else {
+					if (eventName === 'click'){console.log(6.13);}
 					subscribers[eventName] = 1;
 				}
 			} else {
@@ -50,9 +54,12 @@ Ext.define(
 				// so that this map does not grow indefinitely (it can only grow to a finite
 				// set of event names) - see unsubscribe
 				subscribers = subscribers[eventName] || (subscribers[eventName] = {});
+				if (eventName === 'click'){console.log(6.2, id, subscribers);}
 				if (subscribers[id]) {
+					if (eventName === 'click'){console.log(6.21);}
 					++subscribers[id];
 				} else {
+					if (eventName === 'click'){console.log(6.22);}
 					subscribers[id] = 1;
 					me.addDirectListener(eventName, element, capture);
 				}
@@ -64,7 +71,7 @@ Ext.define(
 
 			if (eventName === 'click')
 			{
-				console.log(5, '> Ext.event.publisher.Dom#addDelegatedListener', eventName, this.target);
+				console.log(7, '> Ext.event.publisher.Dom#addDelegatedListener', eventName, this.target);
 			}
 
 			this.delegatedListeners[eventName] = 1;

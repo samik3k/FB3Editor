@@ -19,7 +19,7 @@ Ext.define(
 
 			if (eventName === 'click')
 			{
-				console.log(4, ' > Ext.util.Event#addListener', eventName, me.findListener(fn, scope) === -1, observable);
+				console.log(5, '> Ext.util.Event#addListener', eventName, me.findListener(fn, scope) === -1, observable);
 			}
 
 			//<debug>
@@ -30,8 +30,16 @@ Ext.define(
 
 			if (me.findListener(fn, scope) === -1) {
 				listener = me.createListener(fn, scope, options, caller, manager);
+				if (eventName === 'click')
+				{
+					console.log(5.1, listener);
+				}
 
 				if (me.firing) {
+					if (eventName === 'click')
+					{
+						console.log(5.11, listener);
+					}
 					// if we are currently firing this event, don't disturb the listener loop
 					me.listeners = me.listeners.slice(0);
 				}
@@ -44,7 +52,15 @@ Ext.define(
 					// Find the index at which to insert the listener into the listeners array,
 					// sorted by priority highest to lowest.
 					isNegativePriority = (priority < 0);
+					if (eventName === 'click')
+					{
+						console.log(5.12);
+					}
 					if (!isNegativePriority || hasNegativePriorityIndex) {
+						if (eventName === 'click')
+						{
+							console.log(5.121);
+						}
 						// If the priority is a positive number, or if it is a negative number
 						// and there are other existing negative priority listenrs, then we
 						// need to calcuate the listeners priority-order index.
@@ -60,12 +76,20 @@ Ext.define(
 							}
 						}
 					} else {
+						if (eventName === 'click')
+						{
+							console.log(5.122);
+						}
 						// if the priority is a negative number, and there are no other negative
 						// priority listeners, then no calculation is needed - the negative
 						// priority listener gets appended to the end of the listeners array.
 						me._highestNegativePriorityIndex = index;
 					}
 				} else if (hasNegativePriorityIndex) {
+					if (eventName === 'click')
+					{
+						console.log(5.13);
+					}
 					// listeners with a priority of 0 or undefined are appended to the end of
 					// the listeners array unless there are negative priority listeners in the
 					// listeners array, then they are inserted before the highest negative
@@ -74,15 +98,22 @@ Ext.define(
 				}
 
 				if (!isNegativePriority && index <= highestNegativePriorityIndex) {
+					if (eventName === 'click')
+					{
+						console.log(5.14);
+					}
 					me._highestNegativePriorityIndex ++;
 				}
 				if (index === length) {
+					if (eventName === 'click'){console.log(5.15, index);}
 					listeners[length] = listener;
 				} else {
+					if (eventName === 'click'){console.log(5.16);}
 					Ext.Array.insert(listeners, index, [listener]);
 				}
 
 				if (observable.isElement) {
+					if (eventName === 'click'){console.log(5.17);}
 					// It is the role of Ext.util.Event (vs Ext.Element) to handle subscribe/
 					// unsubscribe because it is the lowest level place to intercept the
 					// listener before it is added/removed.  For addListener this could easily
