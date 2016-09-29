@@ -19,7 +19,7 @@ Ext.define(
 
 			if (eventName === 'click')
 			{
-				console.log('Ext.util.Event#addListener', eventName, me.findListener(fn, scope) === -1, observable);
+				console.log(4, ' > Ext.util.Event#addListener', eventName, me.findListener(fn, scope) === -1, observable);
 			}
 
 			//<debug>
@@ -30,11 +30,6 @@ Ext.define(
 
 			if (me.findListener(fn, scope) === -1) {
 				listener = me.createListener(fn, scope, options, caller, manager);
-
-				if (eventName === 'click')
-				{
-					console.log(listener);
-				}
 
 				if (me.firing) {
 					// if we are currently firing this event, don't disturb the listener loop

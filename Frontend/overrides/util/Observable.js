@@ -8,83 +8,6 @@ Ext.define(
 	'FBEditor.override.util.Observable',
 	{
 		override: 'Ext.util.Observable',
-		
-		constructor: function(config) {
-			var me = this,
-				self = me.self,
-				declaredListeners, listeners,
-				bubbleEvents, len, i;
-
-			if (me.xtype === 'button')
-			{
-				//console.log('Observable', me.$observableInitialized, me);
-			}
-
-			// Observable can be extended and/or mixed in at multiple levels in a Class 
-			// hierarchy, and may have its constructor invoked multiple times for a given 
-			// instance.  The following ensures we only perform initialization the first 
-			// time the constructor is called. 
-			if (me.$observableInitialized) {
-				return;
-			}
-			me.$observableInitialized = true;
-
-			me.hasListeners = new me.HasListeners();
-
-			me.eventedBeforeEventNames = {};
-
-			me.events = me.events || {};
-
-			declaredListeners = self.listeners;
-			if (declaredListeners && !me._addDeclaredListeners(declaredListeners)) {
-				// Nulling out declared listeners allows future instances to avoid 
-				// recursing into the declared listeners arrays if the first instance 
-				// discovers that there are no declarative listeners in its hierarchy 
-				self.listeners = null;
-			}
-
-			listeners = (config && config.listeners) || me.listeners;
-
-			if (listeners) {
-				if (listeners instanceof Array) {
-					// Support for listeners declared as an array: 
-					// 
-					//     listeners: [ 
-					//         { foo: fooHandler }, 
-					//         { bar: barHandler } 
-					//     ] 
-					for (i = 0, len = listeners.length; i < len; ++i) {
-						me.addListener(listeners[i]);
-					}
-				} else {
-					me.addListener(listeners);
-				}
-			}
-
-			bubbleEvents = (config && config.bubbleEvents) || me.bubbleEvents;
-
-			if (bubbleEvents) {
-				me.enableBubble(bubbleEvents);
-			}
-
-			if (me.$applyConfigs) {
-				// Ext.util.Observable applies config properties directly to the instance 
-				if (config) {
-					Ext.apply(me, config);
-				}
-			}
-			else {
-				// Ext.mixin.Observable uses the config system 
-				me.initConfig(config);
-			}
-
-			if (listeners) {
-				// Set as an instance property to preempt the prototype in case any are set there. 
-				// Prevents listeners from being added multiple times if this constructor 
-				// is called more than once by multiple parties in the inheritance hierarchy 
-				me.listeners = null;
-			}
-		},
 
 		privates: {
 			doAddListener: function(ename, fn, scope, options, order, caller, manager) {
@@ -138,7 +61,7 @@ Ext.define(
 
 				if (ename === 'click')
 				{
-					console.log('doAddListener', ename, fn !== Ext.emptyFn, event);
+					console.log('Ext.util.Observable#doAddListener', ename, fn !== Ext.emptyFn, event);
 				}
 
 				if (fn !== Ext.emptyFn) {
