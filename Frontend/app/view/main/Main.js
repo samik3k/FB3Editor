@@ -23,6 +23,7 @@ Ext.define(
 					handler: function ()
 					{
 						console.log('handler');
+						alert('Работает!')
 					},
 					listeners: {
 						/*click: function ()

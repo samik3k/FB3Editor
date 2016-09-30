@@ -59,7 +59,7 @@ Ext.define(
 					event = me._initEvent(ename);
 				}
 
-				if (ename === 'click')
+				if (ename === 'click' || ename === 'tap')
 				{
 					console.log('Ext.util.Observable#doAddListener', ename, fn !== Ext.emptyFn, event);
 				}
