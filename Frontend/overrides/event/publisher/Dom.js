@@ -14,25 +14,25 @@ Ext.define(
 			var me = this,
 				subscribers, id;
 
-			if ((eventName === 'click' || eventName === 'tap') && element.component && element.component.xtype === 'button')
+			if ((eventName === 'click' || eventName === 'tap') && element.component)
 			{
 				console.log(6, '> Ext.event.publisher.Dom#subscribe', eventName, this.target, element.component);
-				try {
+				/*try {
 					throw Error();
 				}
 				catch (e)
 				{
 					console.log(e);
-				}
+				}*/
 			}
 
 			if (delegated && !me.directEvents[eventName]) {
 				// delegated listeners
 				subscribers = capture ? me.captureSubscribers : me.bubbleSubscribers;
-				if (eventName === 'click' || eventName === 'tap'){console.log(6.1, subscribers);}
+				if (eventName === 'click' || eventName === 'tap'){console.log(6.1, subscribers, me.handles[eventName], me.delegatedListeners[eventName], me.handles, me.delegatedListeners);}
 
 				if (!me.handles[eventName] && !me.delegatedListeners[eventName]) {
-					if (eventName === 'click' || eventName === 'tap'){console.log(6.11, me.handles, me.delegatedListeners);}
+					if (eventName === 'click' || eventName === 'tap'){console.log(6.11);}
 					// First time we've attached a listener for this eventName - need to begin
 					// listening at the dom level
 					me.addDelegatedListener(eventName);

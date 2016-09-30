@@ -26,10 +26,10 @@ Ext.define(
 						alert('Работает!')
 					},
 					listeners: {
-						/*click: function ()
+						click: function ()
 						{
 							console.log('listeners click');
-						},*/
+						},
 						afterrender: function ()
 						{
 							var view = this;
