@@ -14,7 +14,8 @@ Ext.define(
 				managedListeners = me.managedListeners = me.managedListeners || [],
 				config, passedOptions;
 
-			if (ename === 'click' || ename.click || ename === 'tap' || ename.tap){console.log(2, '> Ext.mixin.Observable#addManagedListener', item);}
+			if (ename === 'click' || ename.click || ename === 'tap' || ename.tap || ename === 'mousedown' || ename.mousedown)
+			{console.log(2, '> Ext.mixin.Observable#addManagedListener', ename, item);}
 
 			if (typeof ename !== 'string') {
 				// When creating listeners using the object form, allow caller to override the default of 
@@ -22,15 +23,12 @@ Ext.define(
 				// This is used by relayEvents, when adding its relayer so that it does not contribute 
 				// a spurious options param to the end of the arg list. 
 				passedOptions = arguments.length > 4 ? options : ename;
-				if (ename === 'click' || ename.click || ename === 'tap' || ename.tap){console.log(2.1, passedOptions);}
 
 				options = ename;
 				for (ename in options) {
 					if (options.hasOwnProperty(ename)) {
 						config = options[ename];
-						if (ename === 'click' || ename.click || ename === 'tap' || ename.tap){console.log(2.11, config, item.$eventOptions);}
 						if (!item.$eventOptions[ename]) {
-							if (ename === 'click' || ename.click || ename === 'tap' || ename.tap){console.log(2.111);}
 							// recurse, but pass the noDestroy parameter as true so that lots of individual Destroyables are not created. 
 							// We create a single one at the end if necessary. 
 							me.addManagedListener(item, ename, config.fn || config, config.scope || options.scope || scope, config.fn ? config : passedOptions, true);
@@ -38,19 +36,18 @@ Ext.define(
 					}
 				}
 				if (options && options.destroyable) {
-					if (ename === 'click' || ename.click || ename === 'tap' || ename.tap){console.log(2.12, passedOptions);}
 					return new ListenerRemover(me, item, options);
 				}
 			}
 			else {
-				if (ename === 'click' || ename === 'tap'){console.log(2.2, fn);}
+				if (ename === 'click' || ename === 'tap' || ename === 'mousedown'){console.log(2.2, fn);}
 				if (fn !== Ext.emptyFn) {
-					if (ename === 'click' || ename === 'tap'){console.log(2.21, options);}
+					if (ename === 'click' || ename === 'tap' || ename === 'mousedown'){console.log(2.21, options);}
 					item.doAddListener(ename, fn, scope, options, null, me, me);
 
 					// The 'noDestroy' flag is sent if we're looping through a hash of listeners passing each one to addManagedListener separately 
 					if (!noDestroy && options && options.destroyable) {
-						if (ename === 'click' || ename === 'tap'){console.log(2.211);}
+						if (ename === 'click' || ename === 'tap' || ename === 'mousedown'){console.log(2.211);}
 						return new ListenerRemover(me, item, ename, fn, scope);
 					}
 				}
