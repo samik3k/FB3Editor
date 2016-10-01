@@ -62,8 +62,14 @@ Ext.define(
 
 		init: function ()
 		{
+			/*Ext.feature.has.Touch = false;
+			Ext.feature.has.TouchEvents = false;
+			Ext.feature.has.touchScroll = 0;
+			Ext.supports.Touch = false;
+			Ext.supports.TouchEvents = false;
+			Ext.supports.touchScroll = 0;*/
 			console.log('Ext.supports', Ext.supports);
-			
+
 			// версия
 			FBEditor.version = Ext.manifest.loader ? Ext.manifest.loader.cache : 'developer';
 			FBEditor.versionParam = Ext.manifest.loader ?

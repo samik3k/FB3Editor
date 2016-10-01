@@ -69,14 +69,22 @@ Ext.define(
 		addDelegatedListener: function(eventName) {
 			var me = this;
 
-			if (eventName === 'click' || eventName === 'tap')
+			console.log(77, '> Ext.event.publisher.Dom#addDelegatedListener', eventName, this.target, this.captureEvents);
+			if (true/*!eventName === 'click' && !eventName === 'mousedown'*/)
 			{
-				console.log(7, '> Ext.event.publisher.Dom#addDelegatedListener', eventName, this.target);
+				this.delegatedListeners[eventName] = 1;
+				this.target.addEventListener(
+					eventName, this.onDelegatedEvent, !!this.captureEvents[eventName]
+				);
 			}
+		},
 
-			this.delegatedListeners[eventName] = 1;
-			this.target.addEventListener(
-				eventName, this.onDelegatedEvent, !!this.captureEvents[eventName]
+		addDirectListener: function(eventName, element, capture) {
+			console.log(88, '> Ext.event.publisher.Dom#addDirectListener', eventName, element);
+			element.dom.addEventListener(
+				eventName,
+				capture ? this.onDirectCaptureEvent : this.onDirectEvent,
+				capture
 			);
 		},
 
