@@ -15,6 +15,7 @@ Ext.define(
 				ln, i;
 
 			console.log('> Ext.event.publisher.Dom#onReady', domEvents);
+			console.log('supportsTouchEvents && Ext.isWebKit && Ext.os.is.Desktop', Ext.supports.TouchEvents , Ext.isWebKit , Ext.os.is.Desktop);
 
 			if (domEvents) {
 				// If the publisher has handledDomEvents we attach delegated listeners up front
@@ -82,14 +83,7 @@ Ext.define(
 		addDelegatedListener: function(eventName) {
 			var me = this;
 
-			if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
-			{
-				console.log(77, '> Ext.event.publisher.Dom#addDelegatedListener', eventName, this.target, this.captureEvents);
-				if (eventName === 'mousedown')
-				{
-					try {throw Error();} catch (e) {console.log(e);}
-				}
-			}
+			console.log(77, '> Ext.event.publisher.Dom#addDelegatedListener', eventName, this.target, this.captureEvents);
 			this.delegatedListeners[eventName] = 1;
 			this.target.addEventListener(
 				eventName, this.onDelegatedEvent, !!this.captureEvents[eventName]
@@ -97,7 +91,7 @@ Ext.define(
 		},
 
 		addDirectListener: function(eventName, element, capture) {
-			if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+			if (eventName === 'touchstart' || eventName === 'touchend')
 			{
 				console.log(88, '> Ext.event.publisher.Dom#addDirectListener', eventName, element);
 			}
