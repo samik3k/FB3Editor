@@ -20,7 +20,7 @@ Ext.define(
 				// to do it here because we need to use the lowercase name for lookup
 				// in the event translation map.
 				eventName = Ext.canonicalEventName(eventName);
-				if (eventName === 'click'  || eventName === 'tap' || eventName === 'mousedown'){console.log(3, '> Ext.dom.Element#doAddListener', eventName, me.blockedEvents, me);}
+				if (eventName === 'touchstart' || eventName === 'touchend'){console.log(3, '> Ext.dom.Element#doAddListener', eventName, me.blockedEvents, me);}
 
 				// Blocked events (such as emulated mouseover in mobile webkit) are prevented
 				// from firing
@@ -28,18 +28,18 @@ Ext.define(
 				{
 					observableDoAddListener = me.mixins.observable.doAddListener;
 					options = options || {};
-					if (eventName === 'click'  || eventName === 'tap' || eventName === 'mousedown'){console.log(3.1, options, observableDoAddListener);}
+					if (eventName === 'touchstart' || eventName === 'touchend'){console.log(3.1, options, observableDoAddListener);}
 
 					if (me.longpressEvents[eventName])
 					{
-						if (eventName === 'click'  || eventName === 'tap' || eventName === 'mousedown'){console.log(3.12);}
+						if (eventName === 'touchstart' || eventName === 'touchend'){console.log(3.12);}
 						me.disableTouchContextMenu();
 					}
 
 					if (Element.useDelegatedEvents === false)
 					{
 						options.delegated = options.delegated || false;
-						if (eventName === 'click'  || eventName === 'tap' || eventName === 'mousedown'){console.log(3.13, options.delegated);}
+						if (eventName === 'touchstart' || eventName === 'touchend'){console.log(3.13, options.delegated);}
 					}
 
 					if (options.translate !== false)
@@ -47,10 +47,10 @@ Ext.define(
 						// translate events where applicable.  This allows applications that
 						// were written for desktop to work on mobile devices and vice versa.
 						additiveEventName = me.additiveEvents[eventName];
-						if (eventName === 'click'  || eventName === 'tap' || eventName === 'mousedown'){console.log(3.14, additiveEventName, me.additiveEvents);}
+						if (eventName === 'touchstart' || eventName === 'touchend'){console.log(3.14, additiveEventName, me.additiveEvents);}
 						if (additiveEventName)
 						{
-							if (eventName === 'click'  || eventName === 'tap' || eventName === 'mousedown'){console.log(3.141, additiveEventName);}
+							if (eventName === 'touchstart' || eventName === 'touchend'){console.log(3.141, additiveEventName);}
 							// additiveEvents means the translation is "additive" - meaning we
 							// need to attach the original event in addition to the translated
 							// one.  An example of this is devices that have both mousedown
@@ -63,7 +63,7 @@ Ext.define(
 						translatedEventName = me.eventMap[eventName];
 						if (translatedEventName)
 						{
-							if (eventName === 'click'  || eventName === 'tap' || eventName === 'mousedown'){console.log(3.142, translatedEventName);}
+							if (eventName === 'touchstart' || eventName === 'touchend'){console.log(3.142, translatedEventName);}
 							// options.type may have already been set above
 							options.type = options.type || eventName;
 							eventName = translatedEventName;

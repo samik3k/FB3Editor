@@ -14,7 +14,7 @@ Ext.define(
 				managedListeners = me.managedListeners = me.managedListeners || [],
 				config, passedOptions;
 
-			if (ename === 'click' || ename.click || ename === 'tap' || ename.tap || ename === 'mousedown' || ename.mousedown)
+			if (ename === 'touchstart' || ename.touchstart || ename === 'touchend' || ename.touchend)
 			{console.log(2, '> Ext.mixin.Observable#addManagedListener', ename, item);}
 
 			if (typeof ename !== 'string') {
@@ -40,14 +40,14 @@ Ext.define(
 				}
 			}
 			else {
-				if (ename === 'click' || ename === 'tap' || ename === 'mousedown'){console.log(2.2, fn);}
+				if (ename === 'touchstart' || ename === 'touchend'){console.log(2.2, fn);}
 				if (fn !== Ext.emptyFn) {
-					if (ename === 'click' || ename === 'tap' || ename === 'mousedown'){console.log(2.21, options);}
+					if (ename === 'touchstart' || ename === 'touchend'){console.log(2.21, options);}
 					item.doAddListener(ename, fn, scope, options, null, me, me);
 
 					// The 'noDestroy' flag is sent if we're looping through a hash of listeners passing each one to addManagedListener separately 
 					if (!noDestroy && options && options.destroyable) {
-						if (ename === 'click' || ename === 'tap' || ename === 'mousedown'){console.log(2.211);}
+						if (ename === 'touchstart' || ename === 'touchend'){console.log(2.211);}
 						return new ListenerRemover(me, item, ename, fn, scope);
 					}
 				}

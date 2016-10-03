@@ -17,7 +17,7 @@ Ext.define(
 				listeners, listener, priority, isNegativePriority, highestNegativePriorityIndex,
 				hasNegativePriorityIndex, length, index, i, listenerPriority;
 
-			if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+			if (eventName === 'touchstart' || eventName === 'touchend')
 			{
 				console.log(5, '> Ext.util.Event#addListener', eventName, me.findListener(fn, scope) === -1, observable);
 			}
@@ -30,13 +30,13 @@ Ext.define(
 
 			if (me.findListener(fn, scope) === -1) {
 				listener = me.createListener(fn, scope, options, caller, manager);
-				if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+				if (eventName === 'touchstart' || eventName === 'touchend')
 				{
 					console.log(5.1, listener);
 				}
 
 				if (me.firing) {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+					if (eventName === 'touchstart' || eventName === 'touchend')
 					{
 						console.log(5.11, listener);
 					}
@@ -52,12 +52,12 @@ Ext.define(
 					// Find the index at which to insert the listener into the listeners array,
 					// sorted by priority highest to lowest.
 					isNegativePriority = (priority < 0);
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+					if (eventName === 'touchstart' || eventName === 'touchend')
 					{
 						console.log(5.12);
 					}
 					if (!isNegativePriority || hasNegativePriorityIndex) {
-						if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+						if (eventName === 'touchstart' || eventName === 'touchend')
 						{
 							console.log(5.121);
 						}
@@ -76,7 +76,7 @@ Ext.define(
 							}
 						}
 					} else {
-						if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+						if (eventName === 'touchstart' || eventName === 'touchend')
 						{
 							console.log(5.122);
 						}
@@ -86,7 +86,7 @@ Ext.define(
 						me._highestNegativePriorityIndex = index;
 					}
 				} else if (hasNegativePriorityIndex) {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+					if (eventName === 'touchstart' || eventName === 'touchend')
 					{
 						console.log(5.13);
 					}
@@ -98,22 +98,22 @@ Ext.define(
 				}
 
 				if (!isNegativePriority && index <= highestNegativePriorityIndex) {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+					if (eventName === 'touchstart' || eventName === 'touchend')
 					{
 						console.log(5.14);
 					}
 					me._highestNegativePriorityIndex ++;
 				}
 				if (index === length) {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(5.15, index);}
+					if (eventName === 'touchstart' || eventName === 'touchend'){console.log(5.15, index);}
 					listeners[length] = listener;
 				} else {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(5.16);}
+					if (eventName === 'touchstart' || eventName === 'touchend'){console.log(5.16);}
 					Ext.Array.insert(listeners, index, [listener]);
 				}
 
 				if (observable.isElement) {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(5.17);}
+					if (eventName === 'touchstart' || eventName === 'touchend'){console.log(5.17);}
 					// It is the role of Ext.util.Event (vs Ext.Element) to handle subscribe/
 					// unsubscribe because it is the lowest level place to intercept the
 					// listener before it is added/removed.  For addListener this could easily

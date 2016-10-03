@@ -35,7 +35,7 @@ Ext.define(
 			var me = this,
 				subscribers, id;
 
-			if ((eventName === 'click' || eventName === 'tap' || eventName === 'mousedown') && element.component)
+			if (eventName === 'touchstart' || eventName === 'touchend')
 			{
 				console.log(6, '> Ext.event.publisher.Dom#subscribe', eventName, this.target, element.component);
 			}
@@ -43,20 +43,20 @@ Ext.define(
 			if (delegated && !me.directEvents[eventName]) {
 				// delegated listeners
 				subscribers = capture ? me.captureSubscribers : me.bubbleSubscribers;
-				if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(6.1, subscribers, me.handles[eventName], me.delegatedListeners[eventName], me.handles, me.delegatedListeners);}
+				if (eventName === 'touchstart' || eventName === 'touchend'){console.log(6.1, subscribers, me.handles[eventName], me.delegatedListeners[eventName], me.handles, me.delegatedListeners);}
 
 				if (!me.handles[eventName] && !me.delegatedListeners[eventName]) {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(6.11);}
+					if (eventName === 'touchstart' || eventName === 'touchend'){console.log(6.11);}
 					// First time we've attached a listener for this eventName - need to begin
 					// listening at the dom level
 					me.addDelegatedListener(eventName);
 				}
 
 				if (subscribers[eventName]) {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(6.12);}
+					if (eventName === 'touchstart' || eventName === 'touchend'){console.log(6.12);}
 					++subscribers[eventName];
 				} else {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(6.13);}
+					if (eventName === 'touchstart' || eventName === 'touchend'){console.log(6.13);}
 					subscribers[eventName] = 1;
 				}
 			} else {
@@ -68,12 +68,12 @@ Ext.define(
 				// so that this map does not grow indefinitely (it can only grow to a finite
 				// set of event names) - see unsubscribe
 				subscribers = subscribers[eventName] || (subscribers[eventName] = {});
-				if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(6.2, id, subscribers);}
+				if (eventName === 'touchstart' || eventName === 'touchend'){console.log(6.2, id, subscribers);}
 				if (subscribers[id]) {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(6.21);}
+					if (eventName === 'touchstart' || eventName === 'touchend'){console.log(6.21);}
 					++subscribers[id];
 				} else {
-					if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown'){console.log(6.22);}
+					if (eventName === 'touchstart' || eventName === 'touchend'){console.log(6.22);}
 					subscribers[id] = 1;
 					me.addDirectListener(eventName, element, capture);
 				}
@@ -106,12 +106,12 @@ Ext.define(
 			var me = this,
 				timeStamp = e.timeStamp;
 
-			if (e.type === 'click' || e.type === 'tap' || e.type === 'mousedown')
+			e = new Ext.event.Event(e);
+
+			if (e.type === 'touchstart' || e.type === 'touchend')
 			{
 				console.log('Ext.event.publisher.Dom#doDelegatedEvent', e.type, e, me.isEventBlocked(e));
 			}
-
-			e = new Ext.event.Event(e);
 
 			if (me.isEventBlocked(e)) {
 				return false;
@@ -136,7 +136,7 @@ Ext.define(
 			var me = this,
 				targets, el, i, ln;
 
-			if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+			if (eventName === 'touchstart' || eventName === 'touchend')
 			{
 				console.log('Ext.event.publisher.Dom#publish', eventName, target, e);
 			}
@@ -192,7 +192,7 @@ Ext.define(
 		fire: function(element, eventName, e, direct, capture) {
 			var event;
 
-			if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+			if (eventName === 'touchstart' || eventName === 'touchend')
 			{
 				console.log('Ext.event.publisher.Dom#fire', element.hasListeners[eventName], element);
 			}
@@ -212,7 +212,7 @@ Ext.define(
 					// yes, this second null check for event is necessary - one of the
 					// above assignments might have resulted in undefined
 					if (event) {
-						if (eventName === 'click' || eventName === 'tap' || eventName === 'mousedown')
+						if (eventName === 'touchstart' || eventName === 'touchend')
 						{
 							console.log('Ext.event.publisher.Dom#setCurrentTarget', event, element.dom);
 						}
