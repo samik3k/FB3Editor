@@ -62,8 +62,6 @@ Ext.define(
 
 		init: function ()
 		{
-			console.log('Ext.supports', Ext.supports);
-
 			// версия
 			FBEditor.version = Ext.manifest.loader ? Ext.manifest.loader.cache : 'developer';
 			FBEditor.versionParam = Ext.manifest.loader ?

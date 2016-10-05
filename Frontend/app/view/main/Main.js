@@ -22,20 +22,55 @@ Ext.define(
 					text: 'Тест версии ' + FBEditor.version,
 					handler: function ()
 					{
-						console.log('handler');
-						alert('Работает!')
+						alert('Работает!');
+						console.log('***** handler Работает! *****');
 					},
 					listeners: {
 						afterrender: function ()
 						{
-							var view = this;
+							var view = this,
+								dom = view.getEl().dom;
 
-							view.getEl().dom.addEventListener(
+							dom.addEventListener(
+								'touchstart',
+								function ()
+								{
+									console.log('----------------------- addEventListener touchstart');
+								}
+							);
+							dom.addEventListener(
+								'touchend',
+								function ()
+								{
+									console.log('----------------------- addEventListener touchend');
+								}
+							);
+							dom.addEventListener(
+								'tap',
+								function ()
+								{
+									console.log('----------------------- addEventListener tap');
+								}
+							);
+							dom.addEventListener(
 								'click',
 								function ()
 								{
-									console.log('-----------------------');
-									console.log('addEventListener click');
+									console.log('----------------------- addEventListener click');
+								}
+							);
+							dom.addEventListener(
+								'mousedown',
+								function ()
+								{
+									console.log('----------------------- addEventListener mousedown');
+								}
+							);
+							dom.addEventListener(
+								'mousestart',
+								function ()
+								{
+									console.log('----------------------- addEventListener mousestart');
 								}
 							);
 						}
