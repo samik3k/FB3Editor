@@ -62,6 +62,8 @@ Ext.define(
 
 		init: function ()
 		{
+			console.log('window.ontouchend', window.ontouchend);
+			
 			// версия
 			FBEditor.version = Ext.manifest.loader ? Ext.manifest.loader.cache : 'developer';
 			FBEditor.versionParam = Ext.manifest.loader ?

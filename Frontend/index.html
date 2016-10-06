@@ -18,6 +18,11 @@
             isDesktop = true;
         }
 
+        console.log('window.navigator.userAgent', window.navigator.userAgent);
+        console.log('window.navigator.platform', window.navigator.platform);
+
+        console.log('isFF, isDesktop, window.ontouchend', isFF, isDesktop, window.ontouchend);
+
         if (isFF && isDesktop)
         {
             delete window.ontouchend;
